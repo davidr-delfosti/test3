@@ -9,7 +9,6 @@ jobs:
   displayName: 'Deploy to VM'
   environment: 
     name: 'VM'
-    resourceName: 'VM'
     resourceType: 'virtualMachine'
   strategy:
     runOnce:
