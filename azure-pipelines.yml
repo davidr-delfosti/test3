@@ -24,7 +24,8 @@ steps:
     contents: |
       src/*
       public/*
-       '*.json'
+       package.json 
+      '*.json'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - script: |
