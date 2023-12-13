@@ -16,7 +16,7 @@ jobs:
         steps:
         - task: UseNode@1
           inputs:
-            version: '16.x'
+            version: '16.17'
           displayName: 'Install Node.js'
 
         - script: |
