@@ -25,7 +25,7 @@ steps:
       src/*
       public/*
        package.json 
-      '*.json'
+      .eslintrc
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - script: |
