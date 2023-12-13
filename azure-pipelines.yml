@@ -22,7 +22,9 @@ steps:
   inputs: 
     sourceFolder: '$(Build.SourcesDirectory)'
     contents: |
-      **
+      src/*
+      public/*
+       '*.json'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - script: |
