@@ -1,44 +1,38 @@
 trigger:
-- main
+- main 
 
-pool:
-  vmImage: ubuntu-latest
+pool: 
+  vmImage: 'ubuntu-latest'
 
-jobs:
-- deployment: VMDeploy
-  displayName: 'Deploy to VM'
-  environment: 
-    name: 'VM'
-    resourceType: 'virtualMachine'
-  strategy:
-    runOnce:
-      deploy:   
-        steps:
-        - task: UseNode@1
-          inputs:
-            version: '16.17'
-          displayName: 'Install Node.js'
+steps:
 
-        - script: |
-            npm install
-          displayName: 'npm install'
+- task: UseNode@1
+  inputs:
+    version: '16.17'
 
-        - task: CopyFiles@2
-          inputs:
-            sourceFolder: '$(Build.SourcesDirectory)'
-            contents: |
-              src/*
-              public/*
-            targetFolder: '$(Build.ArtifactStagingDirectory)'
-          displayName: 'Copy project files'
+- task: Npm@1
+  inputs:
+    command: 'install'
 
-        - task: PublishPipelineArtifact@1
-          inputs:
-            artifactName: 'e2e-server'
-            targetPath: '$(Build.ArtifactStagingDirectory)'
-            publishLocation: 'pipeline'
-          displayName: 'Publish npm artifact'
+- script: |
+    ls -la $(Build.ArtifactStagingDirectory)
+  displayName: 'List files in artifact staging directory'
 
-        - script: |
-            npm run build
-          displayName: 'npm build'
+- task: CopyFiles@2
+  inputs: 
+    sourceFolder: '$(Build.SourcesDirectory)'
+    contents: |
+      src/*
+      public/*
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- script: |
+    npm run build
+  displayName: 'npm build'
+  workingDirectory: $(Build.ArtifactStagingDirectory)
+
+- task: PublishPipelineArtifact@1
+  inputs: 
+    artifactName: 'e2e-server'
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    publishLocation: 'pipeline'
